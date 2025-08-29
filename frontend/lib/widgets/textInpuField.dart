@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/const/size.dart';
 
 @immutable
 class TextInPutField extends StatelessWidget {
@@ -7,7 +8,7 @@ class TextInPutField extends StatelessWidget {
     required this.text,
     required this.controller,
     this.height,
-    this.width,
+    required this.width,
     this.prefixIcon,
     this.color,
     required this.radius,
@@ -25,7 +26,7 @@ class TextInPutField extends StatelessWidget {
   String text;
   TextEditingController controller;
   IconData? prefixIcon;
-  double? width;
+  double width;
   double? height;
   Color? color;
   double radius;
@@ -41,24 +42,28 @@ class TextInPutField extends StatelessWidget {
   bool? iSprefix = true;
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      validator: validator,
-      onChanged: onChanged,
-      obscureText: obscureText,
-      keyboardType: keyboardType,
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(15),
-        prefixIcon: Icon(prefixIcon),
-        suffixIcon: IconButton(onPressed: sufixOnPress, icon: Icon(sufixIcon)),
-        iconColor: Colors.black,
-        filled: true,
-        hintText: text,
-        hintStyle: TextStyle(fontFamily: family),
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius),
-            borderSide: BorderSide.none),
-        fillColor: color,
+    return Container(
+      width: ScreenUtil.screenWidth * width,
+      child: TextFormField(
+        controller: controller,
+        validator: validator,
+        onChanged: onChanged,
+        obscureText: obscureText,
+        keyboardType: keyboardType,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(15),
+          prefixIcon: Icon(prefixIcon),
+          suffixIcon:
+              IconButton(onPressed: sufixOnPress, icon: Icon(sufixIcon)),
+          iconColor: Colors.black,
+          filled: true,
+          hintText: text,
+          hintStyle: TextStyle(fontFamily: family),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(radius),
+              borderSide: BorderSide.none),
+          fillColor: color,
+        ),
       ),
     );
   }

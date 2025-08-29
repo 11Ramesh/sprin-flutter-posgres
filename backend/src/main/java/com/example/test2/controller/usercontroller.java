@@ -125,10 +125,10 @@ public class usercontroller {
 //        return userservice.updateuser(userdto);
 //    }
 //
-    @DeleteMapping(value = "/deleteuser/{userid}")
-    public String deleteuser(@PathVariable int userid){
-        return userservice.deleteuser(userid);
-    }
+//    @DeleteMapping(value = "/deleteuser/{userid}")
+//    public String deleteuser(@PathVariable int userid){
+//        return userservice.deleteuser(userid);
+//    }
 
 }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/const/size.dart';
+import 'package:frontend/screen/home.dart';
 import 'package:frontend/screen/login.dart';
 import 'package:frontend/screen/register.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => Login(),
         '/register': (context) => Register(),
+        '/home': (context) => Home(),
       },
     );
   }

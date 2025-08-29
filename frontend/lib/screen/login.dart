@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/const/color.dart';
+import 'package:frontend/const/constant.dart';
+import 'package:frontend/const/size.dart';
+import 'package:frontend/logic/service.dart';
 import 'package:frontend/widgets/button.dart';
 import 'package:frontend/widgets/height.dart';
 import 'package:frontend/widgets/textInpuField.dart';
@@ -32,49 +36,85 @@ class _LoginState extends State<Login> {
     return null;
   }
 
+  void login(BuildContext context) async {
+    String response = await ApiService.loginUser(
+        usernameController.text, passwordController.text);
+    if (response == "sucsess") {
+      Navigator.pushNamed(context, "/home");
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: TextShow(
+          text: response,
+          alignment: TextAlign.center,
+        ),
+        duration: Duration(seconds: 3),
+        backgroundColor: Colors.red[300],
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: backgroundColor,
         title: const Text("Login"),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
       ),
-      body: Center(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextInPutField(
-                text: "Username",
-                controller: usernameController,
-                radius: 10,
-                validator: _validateUsername,
-              ),
-              Height(height: 0.05),
-              TextInPutField(
-                text: "Password",
-                controller: passwordController,
-                radius: 10,
-                validator: _validatePassword,
-              ),
-              Height(height: 0.05),
-              Button(
-                text: "Login",
-                radius: 10,
-                onclick: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                  }
-                },
-              ),
-              Row(children: [
-                TextShow(text: "you want to register"),
-                TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/register");
-                    },
-                    child: TextShow(text: "Register"))
-              ])
-            ],
+      body: Container(
+        height: ScreenUtil.screenHeight,
+        decoration: BoxDecoration(gradient: bgGredient),
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Height(height: 0.05),
+                TextInPutField(
+                  text: "Username",
+                  controller: usernameController,
+                  radius: 10,
+                  validator: _validateUsername,
+                  width: inputBoxWidth,
+                  prefixIcon: Icons.person,
+                ),
+                Height(height: 0.02),
+                TextInPutField(
+                  text: "Password",
+                  controller: passwordController,
+                  radius: 10,
+                  validator: _validatePassword,
+                  width: inputBoxWidth,
+                  prefixIcon: Icons.lock,
+                ),
+                Height(height: 0.02),
+                Button(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color.fromARGB(255, 64, 0, 255),
+                  text: "Login",
+                  radius: 10,
+                  onclick: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      login(context);
+                    }
+                  },
+                ),
+                Height(height: 0.05),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  TextShow(text: "Don't have an account?"),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/register");
+                      },
+                      child: TextShow(
+                        text: "Register",
+                        color: Color.fromARGB(255, 64, 0, 255),
+                      ))
+                ])
+              ],
+            ),
           ),
         ),
       ),
